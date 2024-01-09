@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -18,9 +19,10 @@ class EventoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $paises = Pais::all();
+        return view('eventos.create', compact('paises'));
     }
 
     /**

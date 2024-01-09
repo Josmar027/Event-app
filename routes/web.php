@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Pais;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/eventos', EventoController::class);
     Route::resource('/galerias', GaleriaController::class);
+
+    Route::get('/paises/{pais}', function (Pais $pais) {
+        return response()->json($pais->ciudades);
+    });
 });
 
 require __DIR__ . '/auth.php';
