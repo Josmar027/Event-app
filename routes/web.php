@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\EventoController;
-use App\Http\Controllers\GaleriaController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Pais;
+use App\Models\Country;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('/eventos', EventoController::class);
-    Route::resource('/galerias', GaleriaController::class);
+    Route::resource('/events', EventController::class);
+    Route::resource('/galleries', GalleryController::class);
 
-    Route::get('/paises/{pais}', function (Pais $pais) {
-        return response()->json($pais->ciudades);
+    Route::get('/countries/{country}', function (Country $country) {
+        return response()->json($country->cities);
     });
 });
 

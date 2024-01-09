@@ -7,23 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Ciudad extends Model
+class City extends Model
 {
     use HasFactory;
-    protected $table = 'ciudades';
 
     protected $fillable = [
-        'id_pais',
-        'nombre'
+        'country_id',
+        'name'
     ];
 
-    public function pais(): BelongsTo
+    public function country(): BelongsTo
     {
-        return $this->belongsTo(Pais::class);
+        return $this->belongsTo(Country::class);
     }
 
-    public function eventos(): HasMany
+    public function events(): HasMany
     {
-        return $this->hasMany(Evento::class);
+        return $this->hasMany(Event::class);
     }
 }

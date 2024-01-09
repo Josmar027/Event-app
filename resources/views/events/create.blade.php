@@ -2,20 +2,20 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Nuevo Evento') }}
+                {{ __('New Event') }}
             </h2>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-             <form method="POST" action="{{ route('eventos.store') }}" x-data="{
-                pais: null,
-                ciudad: null,
-                ciudades: [],
-                cambiarPais(evento) {
-                    axios.get(`/paises/${evento.target.value}`).then(res => {
-                        this.ciudades = res.data
+            <form method="POST" action="{{ route('events.store') }}" x-data="{
+                country: null,
+                city: null,
+                cities: [],
+                onCountryChange(event) {
+                    axios.get(`/countries/${event.target.value}`).then(res => {
+                        this.cities = res.data
                     })
             
                 }
@@ -24,49 +24,49 @@
                 @csrf
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
-                        <label for="titulo"
+                        <label for="title"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo</label>
-                        <input type="text" id="titulo" name="titulo"
+                        <input type="text" id="title" name="title"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Event app">
-                        @error('titulo')
+                            placeholder="Añade titulo">
+                        @error('title')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label for="id_pais"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona una opcion</label>
-                        <select id="id_pais" x-model="pais" x-on:change="cambiarPais" name="id_pais"
+                        <label for="country_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pais</label>
+                        <select id="country_id" x-model="country" x-on:change="onCountryChange" name="country_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option>Elige un pais</option>
-                            @foreach ($paises as $pais)
-                                <option :value="{{ $pais->id }}">{{ $pais->name }}</option>
+                            <option>Selecciona pais</option>
+                            @foreach ($countries as $country)
+                                <option :value="{{ $country->id }}">{{ $country->name }}</option>
                             @endforeach
                         </select>
-                        @error('id_pais')
+                        @error('country_id')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label for="id_ciudad"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona una opcion</label>
-                        <select id="id_ciudad" name="id_ciudad"
+                        <label for="city_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad</label>
+                        <select id="city_id" name="city_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <template x-for="ciudad in ciudades" :key="ciudad.id">
-                                <option x-bind:value="ciudad.id" x-text="ciudad.nombre"></option>
+                            <template x-for="city in cities" :key="city.id">
+                                <option x-bind:value="city.id" x-text="city.name"></option>
                             </template>
                         </select>
-                        @error('id_ciudad')
+                        @error('city_id')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label for="direccion"
+                        <label for="address"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Direccion</label>
-                        <input type="text" id="direccion" name="direccion"
+                        <input type="text" id="address" name="address"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Event app">
-                        @error('direccion')
+                            placeholder="Direccion del evento">
+                        @error('address')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
@@ -81,38 +81,37 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="fecha_inicio"
+                        <label for="start_date"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha inicio</label>
-                        <input type="date" id="fecha_inicio" name="fecha_inicio"
+                        <input type="date" id="start_date" name="start_date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Event app">
-                        @error('fecha_inicio')
+                            placeholder="">
+                        @error('start_date')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label for="fecha_fin" 
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha fin</label>
-                        <input type="date" id="fecha_fin" name="fecha_fin"
+                        <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha fin</label>
+                        <input type="date" id="end_date" name="end_date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Event app">
-                        @error('fecha_fin')
+                            placeholder="">
+                        @error('end_date')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label for="hora_inicio"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora de inicio</label>
-                        <input type="time" id="hora_inicio" name="hora_inicio"
+                        <label for="start_time"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora inicio</label>
+                        <input type="time" id="start_time" name="start_time"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Event app">
-                        @error('hora_inicio')
+                            placeholder="">
+                        @error('start_time')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
                         <label for="num_tickets"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nº Tickets</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nº: Tickets</label>
                         <input type="number" id="num_tickets" name="num_tickets"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="1">
@@ -121,12 +120,12 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="descripcion"
+                        <label for="description"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
-                        <textarea id="descripcion" name="descripcion" rows="4"
+                        <textarea id="description" name="description" rows="4"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Dinos que piensas..."></textarea>
-                        @error('descripcion')
+                            placeholder="Descripcion del evento..."></textarea>
+                        @error('description')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
@@ -150,7 +149,7 @@
                 </div> --}}
                 <div>
                     <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Crear</button>
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create</button>
                 </div>
             </form>
         </div>

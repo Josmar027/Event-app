@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Comentario extends Model
+class Attending extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id_user',
-        'id_evento',
-        'contenido'
+        'user_id',
+        'event_id',
+        'num_tickets'
     ];
 
     public function user(): BelongsTo
@@ -21,9 +21,8 @@ class Comentario extends Model
         return $this->belongsTo(User::class);
     }
 
-
-    public function evento(): BelongsTo
+    public function event(): BelongsTo
     {
-        return $this->belongsTo(Evento::class);
+        return $this->belongsTo(Event::class);
     }
 }

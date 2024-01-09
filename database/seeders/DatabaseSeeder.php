@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Ciudad;
-use App\Models\Pais;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -24,17 +24,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Pais::create(['nombre' => 'Alemania']);
-        Pais::create(['nombre' => 'Italia']);
-        Ciudad::create(['id_pais' => 1, 'nombre' => 'Munich']);
-        Ciudad::create(['id_pais' => 1, 'nombre' => 'Berlin']);
-        Ciudad::create(['id_pais' => 1, 'nombre' => 'Dusseldorf']);
-        Ciudad::create(['id_pais' => 2, 'nombre' => 'Roma']);
-        Ciudad::create(['id_pais' => 2, 'nombre' => 'Milan']);
-        Ciudad::create(['id_pais' => 2, 'nombre' => 'Napoles']);
+        Country::create(['name' => 'Alemania']);
+        Country::create(['name' => 'Italia']);
+        City::create(['country_id' => 1, 'name' => 'Munich']);
+        City::create(['country_id' => 1, 'name' => 'Dusseldorf']);
+        City::create(['country_id' => 1, 'name' => 'Berlin']);
+        City::create(['country_id' => 2, 'name' => 'Roma']);
+        City::create(['country_id' => 2, 'name' => 'Napoles']);
+        City::create(['country_id' => 2, 'name' => 'Milan']);
 
-        Tag::create(['nombre' => 'Laravel', 'slug' => 'laravel']);
-        Tag::create(['nombre' => 'Vue JS', 'slug' => 'vue-js']);
-        Tag::create(['nombre' => 'Livewire', 'slug' => 'livewire']);
+        Tag::create(['name' => 'Laravel', 'slug' => 'laravel']);
+        Tag::create(['name' => 'Vue JS', 'slug' => 'vue-js']);
+        Tag::create(['name' => 'Livewire', 'slug' => 'livewire']);
     }
 }

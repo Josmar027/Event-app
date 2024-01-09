@@ -5,7 +5,7 @@
                 {{ __('Eventos') }}
             </h2>
             <div>
-                <a href="{{ route('eventos.create') }}" class="dark:text-white hover:text-slate-200">Nuevo Evento</a>
+                <a href="{{ route('events.create') }}" class="dark:text-white hover:text-slate-200">Nuevo Evento</a>
             </div>
         </div>
     </x-slot>

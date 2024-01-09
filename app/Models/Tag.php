@@ -11,12 +11,12 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre',
+        'name',
         'slug'
     ];
 
-    public function eventos(): BelongsToMany
+    public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Evento::class);
+        return $this->belongsToMany(Event::class);
     }
 }

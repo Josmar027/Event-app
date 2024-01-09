@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,19 +45,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function eventos(): HasMany
+    public function events(): HasMany
     {
-        return $this->hasMany(Evento::class);
+        return $this->hasMany(Event::class);
     }
 
-    public function galerias(): HasMany
+    public function galleries(): HasMany
     {
-        return $this->hasMany(Galeria::class);
+        return $this->hasMany(Gallery::class);
     }
 
-    public function comentarios(): HasMany
+    public function comments(): HasMany
     {
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function likes(): HasMany
@@ -64,8 +65,8 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
-    public function reservas(): HasMany
+    public function attendings(): HasMany
     {
-        return $this->hasMany(Reserva::class);
+        return $this->hasMany(Attending::class);
     }
 }
