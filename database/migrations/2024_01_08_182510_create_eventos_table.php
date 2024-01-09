@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('descripcion');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            $table->time('hora_inicio');
             $table->string('imagen');
             $table->string('direccion');
             $table->integer('num_tickets');
