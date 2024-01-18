@@ -38,14 +38,14 @@
                                     {{ $event->title }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $event->start_date }}
+                                    {{ $event->start_date->format('Y-m-d') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->country->name }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('events.edit', $event) }}"
+                                        <a href="{{ route('events.edit', $event) }}" {{--Ruta e id del evento seleccionado--}}
                                             class="text-green-400 hover:text-green-600">Editar</a>
                                         <form method="POST" class="text-red-400 hover:text-red-600"
                                             action="{{ route('events.destroy', $event) }}">
@@ -63,7 +63,7 @@
                         @empty
                             <tr>
                                 <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                    No events found
+                                    No se encuentran eventos
                                 </td>
                             </tr>
                         @endforelse

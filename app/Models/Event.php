@@ -71,7 +71,7 @@ class Event extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function hasTag($tag)
+    public function hasTag($tag) //Comprobar si hay tags marcados (Edit)
     {
         return $this->tags->contains($tag);
     }

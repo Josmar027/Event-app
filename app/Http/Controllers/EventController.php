@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\Tag;
@@ -13,18 +14,14 @@ use Illuminate\View\View;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(): View
     {
         $events = Event::with('country')->get(); // Guardo el modelo. With para la relacion. Problema N+1
         return view('events.index', compact('events')); // Devuelvo vista
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create(): View
     {
         $countries = Country::all();
@@ -32,9 +29,7 @@ class EventController extends Controller
         return view('events.create', compact('countries', 'tags')); // compact() permite usar las variables en la vista.
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(CreateEventRequest $request): RedirectResponse
     {
         if ($request->hasFile('image')) {
@@ -53,25 +48,32 @@ class EventController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
+    public function edit(Event $event): View
     {
+        $countries = Country::all();
+        $tags = Tag::all();
+        return view('events.edit', compact('countries', 'tags', 'event'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update()
+    public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
+        $data = $request->validated();
+        if ($request->hasFile('image')) { //Compruebo si hay imagen, la borra para almacenar la nueva
+            Storage::delete($event->image);
+            $data['image'] = Storage::putFile('events', $request->file('image'));
+        }
+
+        $data['slug'] = Str::slug($request->title);
+        $event->update($data);
+        $event->tags()->sync($request->tags);
+        return to_route('events.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy()
+    public function destroy(Event $event): RedirectResponse
     {
+        Storage::delete($event->image);
+        $event->tags()->detach();
+        $event->delete();
+        return to_route('events.index');
     }
 }
