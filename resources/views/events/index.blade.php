@@ -12,7 +12,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-             <div class="relative overflow-x-auto">
+            <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -31,21 +31,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($events as $event) {{--Recorro el modelo que traigo desde el controller y asigno valores--}}
+                        @forelse($events as $event)
+                            {{-- Recorro el modelo que traigo desde el controller y asigno valores --}}
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $event->title }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $event->start_date->format('Y-m-d') }}
+                                    {{ $event->start_date->format('d-m-Y') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->country->name }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('events.edit', $event) }}" {{--Ruta e id del evento seleccionado--}}
+                                        <a href="{{ route('events.edit', $event) }}" {{-- Ruta e id del evento seleccionado --}}
                                             class="text-green-400 hover:text-green-600">Editar</a>
                                         <form method="POST" class="text-red-400 hover:text-red-600"
                                             action="{{ route('events.destroy', $event) }}">
