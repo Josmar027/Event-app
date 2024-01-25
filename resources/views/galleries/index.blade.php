@@ -5,7 +5,7 @@
                 {{ __('Galeria') }}
             </h2>
             <div>
-                <a href="{{ route('galleries.create') }}" class="dark:text-white hover:text-slate-200">Nueva Galeria</a>
+                <a href="{{ route('galleries.create') }}" class="dark:text-white hover:text-slate-200">Subir imagen</a>
             </div>
         </div>
     </x-slot>

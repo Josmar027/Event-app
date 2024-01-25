@@ -1,5 +1,13 @@
 <x-main-layout>
-    <div class="mb-16 flex flex-wrap">
+    <div class="m-2 p-2 flex justify-between">
+        <h3 class="mb-4 text-2xl font-bold text-white">{{ $event->title }}</h3>
+        <div class="flex space-x-2 text-white">
+            Desde:
+            <span class="mx-2">{{ $event->start_date->format('d/m/Y') }}</span> | <span
+                class="mx-2">{{ $event->end_date->format('d/m/Y') }}</span>
+        </div>
+    </div>
+    <div class="flex flex-wrap">
         <div class="mb-6 w-full shrink-0 grow-0 basis-auto lg:mb-0 lg:w-6/12 lg:pr-6">
             <div class="flex flex-col">
                 <div class="ripple relative overflow-hidden rounded-lg bg-cover bg-[50%] bg-no-repeat shadow-lg dark:shadow-black/20"
@@ -65,7 +73,7 @@
                     </div>
                 @endauth
                 <div class="flex flex-col p-4">
-                    <span class="text-white font-semibold">Host Info</span>
+                    <span class="text-white font-semibold">Informacion Usuario</span>
                     <div class="flex space-x-4 mt-6 bg-slate-200 p-2 rounded-md">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -82,9 +90,22 @@
             </div>
         </div>
 
-        <div class="w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:pl-6">
-            <h3 class="mb-4 text-2xl text-white font-bold">{{ $event->title }}</h3>
-            <div class="mb-4 flex items-center text-sm font-medium text-danger dark:text-danger-500">
+        <div
+            class="w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:pl-6 bg-white dark:shadow-none dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 rounded p-5">
+
+            <p class="mb-7 text-sm text-neutral-500 dark:text-neutral-400">
+                Hora de Inicio:
+                <time>{{ $event->start_time }}</time>
+            </p>
+            <p>
+                @foreach ($event->tags as $tag)
+                    <span class="p-1 mb-7 m-1 bg-indigo-300 rounded">{{ $tag->name }}</span>
+                @endforeach
+            </p>
+            <p class="mb-6 mt-6 text-neutral-500 dark:text-neutral-300">
+                {{ $event->description }}
+            </p>
+            <div class="mb-4 flex justify-end items-center text-sm font-bold text-danger dark:text-danger-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="orange" class="w-6 h-6 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -95,23 +116,21 @@
                     {{ $event->country->name }}, {{ $event->city->name }}
                 </div>
 
+
+
             </div>
-            <p class="mb-6 text-sm text-neutral-500 dark:text-neutral-400">
-                <u>{{ $event->toArray()['start_date'] }}</u> a las
-                <time>{{ $event->start_time }}</time>
-            </p>
-            <p class="mb-6 text-neutral-500 dark:text-neutral-300">
-                {{ $event->description }}
-            </p>
+            <div class="flex justify-end text-white">
+                {{ $event->address }}
+            </div>
             @auth
                 <div
-                    class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md">
+                    class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-gray-700 p-4 rounded-md">
                     <div class="">
                         <form action="{{ route('events.comments', $event->id) }}" class="flex justify-between space-x-2"
                             method="POST">
                             @csrf
                             <input type="text"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                class="bg-white border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-300 dark:border-gray-600 dark:placeholder-gray-800 dark:text-slate-800 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 name="content" id="content" placeholder="Comentario">
                             <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -122,7 +141,7 @@
                     <div class="w-full">
                         @foreach ($event->comments()->latest()->get() as $comment)
                             <div class="w-full p-4 duration-500">
-                                <div class="flex items-center rounded-lg bg-white p-4 shadow-md shadow-indigo-50">
+                                <div class="flex items-center rounded-lg bg-slate-200 p-4">
                                     <div>
                                         <div class="flex space-x-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -130,9 +149,9 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                            <h2 class="text-lg font-bold text-gray-900">{{ $comment->user->name }}</h2>
+                                            <h2 class="text-lg font-bold text-gray-800">{{ $comment->user->name }}</h2>
                                         </div>
-                                        <p class="text-sm font-semibold text-gray-400">{{ $comment->content }}</p>
+                                        <p class="text-sm font-semibold text-gray-800">{{ $comment->content }}</p>
 
                                         @if (Auth::user()->id === $comment->user_id)
                                             <form
