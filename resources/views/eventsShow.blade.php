@@ -19,7 +19,6 @@
                         onHandleLike() {
                             axios.post(`/events-like/{{ $event->id }}`).then(res => {
                                 this.eventLike = res.data
-                                console.log('eventLike:', this.eventLike);
                             })
                         },
                         onHandleSavedEvent() {
@@ -34,8 +33,8 @@
                         }
                     }">
                         <button type="button" @click="onHandleLike"
-                            class="text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            :class="eventLike ? 'bg-red-700 hover:bg-red-800' : 'bg-slate-400 hover:bg-slate-500'">
+                            class="text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            :class="eventLike ? 'bg-slate-700 hover:bg-slate-800' : 'bg-slate-400 hover:bg-slate-500'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-3.5 h3.5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -66,7 +65,7 @@
                     </div>
                 @endauth
                 <div class="flex flex-col p-4">
-                    <span class="text-indigo-600 font-semibold">Host Info</span>
+                    <span class="text-white font-semibold">Host Info</span>
                     <div class="flex space-x-4 mt-6 bg-slate-200 p-2 rounded-md">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -84,19 +83,21 @@
         </div>
 
         <div class="w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:pl-6">
-            <h3 class="mb-4 text-2xl font-bold">{{ $event->title }}</h3>
+            <h3 class="mb-4 text-2xl text-white font-bold">{{ $event->title }}</h3>
             <div class="mb-4 flex items-center text-sm font-medium text-danger dark:text-danger-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6 mr-2">
+                    stroke="orange" class="w-6 h-6 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
+                <div class="text-white">
+                    {{ $event->country->name }}, {{ $event->city->name }}
+                </div>
 
-                {{ $event->country->name }}, {{ $event->city->name }}
             </div>
             <p class="mb-6 text-sm text-neutral-500 dark:text-neutral-400">
-                Start <u>{{ $event->toArray()['start_date'] }}</u> at
+                <u>{{ $event->toArray()['start_date'] }}</u> a las
                 <time>{{ $event->start_time }}</time>
             </p>
             <p class="mb-6 text-neutral-500 dark:text-neutral-300">
@@ -106,15 +107,49 @@
                 <div
                     class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md">
                     <div class="">
-                        <form action="" class="flex justify-between space-x-2" method="POST">
+                        <form action="{{ route('events.comments', $event->id) }}" class="flex justify-between space-x-2"
+                            method="POST">
+                            @csrf
                             <input type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                name="comment" id="comment" placeholder="Comment">
-                            <button type="button"
+                                name="content" id="content" placeholder="Comentario">
+                            <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Post
+                                Enviar
                             </button>
                         </form>
+                    </div>
+                    <div class="w-full">
+                        @foreach ($event->comments()->latest()->get() as $comment)
+                            <div class="w-full p-4 duration-500">
+                                <div class="flex items-center rounded-lg bg-white p-4 shadow-md shadow-indigo-50">
+                                    <div>
+                                        <div class="flex space-x-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            <h2 class="text-lg font-bold text-gray-900">{{ $comment->user->name }}</h2>
+                                        </div>
+                                        <p class="text-sm font-semibold text-gray-400">{{ $comment->content }}</p>
+
+                                        @if (Auth::user()->id === $comment->user_id)
+                                            <form
+                                                action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="mt-6 rounded-lg bg-red-400 px-4 py-2 text-sm tracking-wider text-white outline-none hover:bg-red-300">Borrar</button>
+
+                                            </form>
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             @endauth

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 
 
-class SaveSystemController extends Controller
+class SavedSystemController extends Controller
 {
     /**
      * Handle the incoming request.
