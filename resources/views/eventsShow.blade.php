@@ -22,8 +22,8 @@
                 @auth
                     <div class="flex space-x-2 p-4" x-data="{
                         eventLike: @js($like),
-                        savedEvent: @js($savedEvent),
-                        attending: @js($attending),
+                        {{-- savedEvent: @js($savedEvent),
+                        attending: @js($attending), --}}
                         onHandleLike() {
                             axios.post(`/events-like/{{ $event->id }}`).then(res => {
                                 this.eventLike = res.data
@@ -50,7 +50,7 @@
                             </svg>
                             Like
                         </button>
-                        <button type="button" @click="onHandleSavedEvent"
+                        {{-- <button type="button" @click="onHandleSavedEvent"
                             class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             :class="savedEvent ? 'bg-yellow-700 hover:bg-yellow-800' : 'bg-slate-400 hover:bg-slate-500'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -69,24 +69,11 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M1 5h12m0 0L9 1m4 4L9 9" />
                             </svg>
-                        </button>
+                        </button> --}}
                     </div>
+
+
                 @endauth
-                <div class="flex flex-col p-4">
-                    <span class="text-white font-semibold">Informacion Usuario</span>
-                    <div class="flex space-x-4 mt-6 bg-slate-200 p-2 rounded-md">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg></span>
-                        <div class="flex flex-col">
-                            <span class="text-2xl">{{ $event->user->name }}</span>
-                            <span class="text-2xl">{{ $event->user->email }}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
