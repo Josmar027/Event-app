@@ -31,7 +31,7 @@ class UpdateEventRequest extends FormRequest
             'country_id' => 'required',
             'city_id' => 'required',
             'description' => 'required',
-            'num_tickets' => 'required',
+            'num_tickets' => 'nullable',
             'tags' => 'required|exists:tags,id'
         ];
     }

@@ -18,14 +18,17 @@
                     <x-nav-link :href="route('eventIndex')" :active="request()->routeIs('eventIndex')">
                         {{ __('Eventos') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.index')">
+                    <x-nav-link :href="route('galleryIndex')" :active="request()->routeIs('galleryIndex')">
                         {{ __('Galeria') }}
                     </x-nav-link>
                     <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')">
                         {{ __('Te gustan') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.index')">
+                        {{ __('Panel galeria') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
-                        {{ __('Panel') }}
+                        {{ __('Panel Eventos') }}
                     </x-nav-link>
                 </div>
             </div>
