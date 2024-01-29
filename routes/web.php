@@ -39,13 +39,17 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::resource('/events', EventController::class);
+    Route::resource('/galleries', GalleryController::class);
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('/events', EventController::class);
-    Route::resource('/galleries', GalleryController::class);
+
 
     Route::get('/liked-events', LikedEventController::class)->name('likedEvents');
     Route::get('/saved-events', SavedEventController::class)->name('savedEvents');

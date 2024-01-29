@@ -24,12 +24,14 @@
                     <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')">
                         {{ __('Te gustan') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.index')">
-                        {{ __('Panel galeria') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
-                        {{ __('Panel Eventos') }}
-                    </x-nav-link>
+                    @if (auth()->check() && auth()->user()->is_admin)
+                        <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+                            {{ __('Panel Eventos') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.index')">
+                            {{ __('Panel galeria') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

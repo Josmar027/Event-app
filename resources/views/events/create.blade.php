@@ -110,7 +110,7 @@
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="hidden">
+                    <div>
                         <label for="num_tickets"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nº: Tickets</label>
                         <input type="number" id="num_tickets" name="num_tickets"
