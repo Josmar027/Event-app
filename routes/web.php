@@ -34,6 +34,10 @@ Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/gallery', GalleryIndexController::class)->name('galleryIndex');
 
+Route::get('/create-symlink', function () {
+    symlink(storage_path('/app/public'), public_path('storage'));
+    echo "Symlink Created. Thanks";
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
