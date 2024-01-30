@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,13 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Jose',
             'email' => 'jose@example.com',
+            'password' => bcrypt('123456'),
+            'is_admin' => 0
+        ]);
+
+        User::factory()->create([
+            'name' => 'Miguel',
+            'email' => 'miguel@example.com',
             'password' => bcrypt('123456'),
             'is_admin' => 0
         ]);
